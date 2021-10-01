@@ -1,8 +1,11 @@
 package handler
 
 import (
+	"bytes"
+
+	shortener "github.com/fuboki10/nanoURL/service/shortner"
+	"github.com/fuboki10/nanoURL/service/store"
 	"github.com/gofiber/fiber/v2"
-	"github.com/fuboki10/nanoURL/service"
 )
 
 type UrlCreationRequest struct {
@@ -16,17 +19,22 @@ func CreateUrl(ctx *fiber.Ctx) error {
 		return ctx.SendString("ERROR")
 	}
 
-	shortUrl := service.shortener.GenerateShortLink(creationRequest.LongUrl)
-	service.store.SaveUrl(shortUrl, creationRequest.LongUrl)
+	shortUrl := shortener.GenerateShortLink(creationRequest.LongUrl)
+	store.SaveUrl(shortUrl, creationRequest.LongUrl)
 
-	host := "http://localhost:3000/"
-	url := host + shortUrl
+	var buffer bytes.Buffer
+
+	buffer.WriteString(ctx.Hostname())
+	buffer.WriteString("/")
+	buffer.WriteString(shortUrl)
+
+	url := buffer.String()
 
 	return ctx.SendString(url)
 }
 
-func HandleShortUrlRedirect(ctx *fiber.Ctx) {
+func UrlRedirect(ctx *fiber.Ctx) error {
 	shortUrl := ctx.Params("url")
-	url := service.store.RetrieveInitialUrl(shortUrl)
-	ctx.Redirect(url)
+	url := store.RetrieveInitialUrl(shortUrl)
+	return ctx.Redirect(url)
 }

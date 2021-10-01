@@ -17,11 +17,10 @@ func main() {
 }
 
 func initRoutes(app *fiber.App) {
-	app.Get("/", func(ctx *fiber.Ctx) error {
-		return ctx.SendFile("public/index.html")
-	})
+	app.Static("/","./public")
 
-	app.Get("/:url",  handler.CreateUrl(ctx))
+	app.Post("/urls",  handler.CreateUrl)
+	app.Get("/urls/:url",  handler.UrlRedirect)
 }
 
 func startServer(app *fiber.App)  {
