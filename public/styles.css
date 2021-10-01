@@ -103,3 +103,24 @@ input {
   max-width: 20em;
   margin: auto;
 }
+
+.output {
+  display: block;
+  font-family: Ubuntu, sans-serif;
+  font-size: 20px;
+  color: #403866;
+  line-height: 1.2;
+  text-align: center;
+  padding-bottom: 49px;
+  margin: auto;
+  margin-top: 5%;
+}
+
+a {
+  color: red;
+  text-decoration: none;
+}
+
+a:hover {
+  cursor: pointer;
+}

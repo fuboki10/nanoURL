@@ -2,6 +2,7 @@ package handler
 
 import (
 	"bytes"
+	"fmt"
 
 	shortener "github.com/fuboki10/nanoURL/service/shortner"
 	"github.com/fuboki10/nanoURL/service/store"
@@ -16,7 +17,9 @@ func CreateUrl(ctx *fiber.Ctx) error {
 	var creationRequest UrlCreationRequest
 	err := ctx.BodyParser(&creationRequest); 
 	if err != nil {
-		return ctx.SendString("ERROR")
+		return ctx.JSON(&fiber.Map{
+			"success": false,
+		})
 	}
 
 	shortUrl := shortener.GenerateShortLink(creationRequest.LongUrl)
@@ -25,12 +28,17 @@ func CreateUrl(ctx *fiber.Ctx) error {
 	var buffer bytes.Buffer
 
 	buffer.WriteString(ctx.Hostname())
-	buffer.WriteString("/")
+	buffer.WriteString("/urls/")
 	buffer.WriteString(shortUrl)
 
 	url := buffer.String()
 
-	return ctx.SendString(url)
+	fmt.Println(url)
+
+	return ctx.JSON(&fiber.Map{
+		"success": true,
+		"url": url,
+	})
 }
 
 func UrlRedirect(ctx *fiber.Ctx) error {

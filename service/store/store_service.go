@@ -43,16 +43,10 @@ func InitializeStore() *StorageService {
 
 
 func SaveUrl(shortUrl string, originalUrl string) {
-	err := storeService.redisClient.Set(ctx, shortUrl, originalUrl, CacheDuration).Err()
-	if err != nil {
-		panic(fmt.Sprintf("Failed saving key url | Error: %v - shortUrl: %s - originalUrl: %s\n", err, shortUrl, originalUrl))
-	}
+	storeService.redisClient.Set(ctx, shortUrl, originalUrl, CacheDuration).Err()
 }
 
 func RetrieveInitialUrl(shortUrl string) string {
-	result, err := storeService.redisClient.Get(ctx, shortUrl).Result()
-	if err != nil {
-		panic(fmt.Sprintf("Failed RetrieveInitialUrl url | Error: %v - shortUrl: %s\n", err, shortUrl))
-	}
+	result, _ := storeService.redisClient.Get(ctx, shortUrl).Result()
 	return result
 }
