@@ -1,4 +1,4 @@
-module github.com/nanoURL
+module github.com/fuboki10/nanoURL
 
 go 1.16
 
