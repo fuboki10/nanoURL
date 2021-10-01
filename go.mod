@@ -7,6 +7,7 @@ require (
 	github.com/go-redis/redis v6.15.9+incompatible // indirect
 	github.com/go-redis/redis/v8 v8.11.3 // indirect
 	github.com/gofiber/fiber/v2 v2.19.0 // indirect
+	github.com/itchyny/base58-go v0.2.0 // indirect
 	github.com/klauspost/compress v1.13.6 // indirect
 	github.com/stretchr/testify v1.7.0 // indirect
 	github.com/valyala/fasthttp v1.30.0 // indirect

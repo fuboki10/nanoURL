@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/fuboki10/nanoURL/store"
+	"github.com/fuboki10/nanoURL/services/store"
 	"github.com/gofiber/fiber/v2"
 )
 
