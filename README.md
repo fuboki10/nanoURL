@@ -1,8 +1,10 @@
 
-<h1 align="center"> nanoURL </h1>
+<h1 align="center"> NANOurl </h1>
 
-<img src="logo.png" alt="logo"/>
-
+<p align="center">
+<img src="public/logo.svg" alt="logo" width="50%" height="50%"/>
+<p\>
+  
 <div align="center">
   
   [![GitHub contributors](https://img.shields.io/github/contributors/fuboki10/nanoURL)](https://github.com/fuboki10/nanoURL/contributors)
