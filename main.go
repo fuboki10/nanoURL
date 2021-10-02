@@ -28,7 +28,7 @@ func initRoutes(app *fiber.App) {
 func startServer(app *fiber.App)  {
 	port := os.Getenv("PORT")
 	if port == "" {
-		port = "3000"
+		port = ":3000"
 	}
 
 	err := app.Listen(port)
