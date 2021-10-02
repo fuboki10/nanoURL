@@ -4,16 +4,15 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/go-redis/redis"
+	"github.com/fuboki10/nanoURL/store"
+	"github.com/fuboki10/nanoURL/store/fake"
+	"github.com/fuboki10/nanoURL/store/redis"
 )
 
 // Define the struct wrapper around raw Redis client
 type StorageService struct {
-	redisClient *redis.Client
-	tempClinet map[string]string
+	client store.Client
 }
-
-var tempRedis map[string]string
 
 // Top level declarations for the storeService and Redis context
 var (
@@ -26,18 +25,15 @@ const CacheDuration = 6 * time.Hour
 
 // Initializing the store service and return a store pointer 
 func InitializeStore() *StorageService {
-	redisClient := redis.NewClient(&redis.Options{
-		Addr: "localhost:6379",
-	})
+	redisClient, err := redis.New()
 
-	_, err := redisClient.Ping().Result()
 	if err != nil {
 		// connect to temp clinet
-		tempRedis = make(map[string]string)
-		storeService.tempClinet = tempRedis
+		tempRedis, _ := fake.New()
+		storeService.client = tempRedis
 	} else {
 		fmt.Printf("\nRedis started successfully")
-		storeService.redisClient = redisClient
+		storeService.client = redisClient
 	}
 
 	return storeService
@@ -45,19 +41,10 @@ func InitializeStore() *StorageService {
 
 
 func SaveUrl(shortUrl string, originalUrl string) {
-	if storeService.redisClient == nil {
-		storeService.tempClinet[shortUrl] = originalUrl
-	} else {
-		storeService.redisClient.Set(shortUrl, originalUrl, CacheDuration).Err()
-	}
+	storeService.client.Set(shortUrl, originalUrl)
 }
 
 func RetrieveInitialUrl(shortUrl string) string {
-	result := ""
-	if storeService.redisClient == nil {
-		result = storeService.tempClinet[shortUrl]
-	} else {
-		result, _ = storeService.redisClient.Get(shortUrl).Result()
-	}
+	result := storeService.client.Get(shortUrl)
 	return result
 }
