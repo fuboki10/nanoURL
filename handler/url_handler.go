@@ -2,7 +2,6 @@ package handler
 
 import (
 	"bytes"
-	"fmt"
 
 	shortener "github.com/fuboki10/nanoURL/service/shortner"
 	"github.com/fuboki10/nanoURL/service/store"
@@ -27,14 +26,11 @@ func CreateUrl(ctx *fiber.Ctx) error {
 
 	var buffer bytes.Buffer
 
-	buffer.WriteString(ctx.Hostname())
-	buffer.WriteString("/urls/")
+	buffer.WriteString("urls/")
 	buffer.WriteString(shortUrl)
 
 	url := buffer.String()
-
-	fmt.Println(url)
-
+	
 	return ctx.JSON(&fiber.Map{
 		"success": true,
 		"url": url,
