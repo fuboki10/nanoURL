@@ -42,6 +42,7 @@
 ## About The Project
 
 nanoURL is url shortner app
+https://nano--url.herokuapp.com/
 
 
 ### Built With
@@ -56,7 +57,8 @@ nanoURL is url shortner app
 
 This is an example of how you may give instructions on setting up your project locally.
 To get a local copy up and running follow these simple example steps.
-You need to install golang and redis running on port 6379
+You need to install golang
+if you have redis on port 6379 it will run on it else it will run on a fake redis
 
 ### Installation
 
@@ -89,9 +91,6 @@ go build
 <!-- TESTING -->
 
 ## Testing
-The tests can be found in ````tests````, and each controller has its own test file in ````tests\unit\controller````. Mongoose models tests are also found in ````tests\unit\models```` as well as middleware which is located at ````tests\unit\middlewares````.
-
-### Running Unit Tests
 
 run the following script:
 ```sh
