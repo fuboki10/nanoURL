@@ -9,7 +9,8 @@ const handleError = () => {
 
 const handleSuccessfullRequest = (url) => {
   const span = document.getElementById('output');
-  const link = `<a href="${url}" target="_blank">${url}</a>`;
+  const href = url.replace(backendUrl, "/urls/")
+  const link = `<a href="${href}" target="_blank">${url}</a>`;
   span.innerHTML = successMessage + link;
 }
 
