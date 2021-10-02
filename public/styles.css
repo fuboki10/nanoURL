@@ -91,13 +91,20 @@ input {
   -o-transition: all 0.4s;
   -moz-transition: all 0.4s;
   transition: all 0.4s;
+  color: #fff;
 }
 
 .btn:hover:before {
-  background-color: #403866;
   width: calc(100% + 20px);
 }
 
+.btn:hover {
+  color: #fff;
+}
+
+.btn:focus {
+  color: #fff;
+}
 
 #logo {
   max-width: 20em;
