@@ -1,6 +1,8 @@
 package main
 
 import (
+	"os"
+
 	"github.com/fuboki10/nanoURL/handler"
 	"github.com/fuboki10/nanoURL/service/store"
 	"github.com/gofiber/fiber/v2"
@@ -24,7 +26,12 @@ func initRoutes(app *fiber.App) {
 }
 
 func startServer(app *fiber.App)  {
-	err := app.Listen(":3000")
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "3000"
+	}
+
+	err := app.Listen(port)
 	if err != nil {
 		panic("failed to start server")
 	}
