@@ -1,11 +1,10 @@
 package store
 
 import (
-	"context"
 	"fmt"
 	"time"
 
-	"github.com/go-redis/redis/v8"
+	"github.com/go-redis/redis/v7"
 )
 
 // Define the struct wrapper around raw Redis client
@@ -16,7 +15,6 @@ type StorageService struct {
 // Top level declarations for the storeService and Redis context
 var (
 	storeService = &StorageService{}
-    ctx = context.Background()
 )
 
 
@@ -31,7 +29,7 @@ func InitializeStore() *StorageService {
 		DB:       0,
 	})
 
-	_, err := redisClient.Ping(ctx).Result()
+	_, err := redisClient.Ping().Result()
 	if err != nil {
 		panic(fmt.Sprintf("Error init Redis: %v", err))
 	}
@@ -43,10 +41,10 @@ func InitializeStore() *StorageService {
 
 
 func SaveUrl(shortUrl string, originalUrl string) {
-	storeService.redisClient.Set(ctx, shortUrl, originalUrl, CacheDuration).Err()
+	storeService.redisClient.Set(shortUrl, originalUrl, CacheDuration).Err()
 }
 
 func RetrieveInitialUrl(shortUrl string) string {
-	result, _ := storeService.redisClient.Get(ctx, shortUrl).Result()
+	result, _ := storeService.redisClient.Get(shortUrl).Result()
 	return result
 }
